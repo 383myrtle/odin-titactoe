@@ -1,8 +1,8 @@
 const gameBoard = (function() {
     let board = [[null, null, null], [null, null, null], [null, null, null]];
-    const gridCells = document.querySelectorAll(".cell");
     const gameGrid = document.querySelector(".game-grid");
-    const cellClick = (e) => {
+    const gridCells = document.querySelectorAll(".cell");
+    const placeSymbol = (e) => {
         const cell = e.target;
         const row = cell.dataset.row;
         const col = cell.dataset.column;
@@ -11,13 +11,13 @@ const gameBoard = (function() {
         gameBoard.render();
     }
 
-    gameGrid.addEventListener("click", cellClick);
+    gameGrid.addEventListener("click", placeSymbol);
 
     const pauseGame = () =>{
-        gameGrid.removeEventListener("click", cellClick);
+        gameGrid.removeEventListener("click", placeSymbol);
     }
     const startGame = () =>{
-        gameGrid.addEventListener("click", cellClick);
+        gameGrid.addEventListener("click", placeSymbol);
     }
     const setCell = (row, col, value) => {
         board[row][col] = value;
@@ -61,13 +61,16 @@ const gameBoard = (function() {
 
         return "draw";
     }
-    return { board, setCell, getCell, render, checkWin, startGame, pauseGame };
+    return { setCell, getCell, render, checkWin, startGame, pauseGame };
 })();
 
 const player = (name, symbol) => {
     const getName = () => name;
     const getSymbol = () => symbol;
-    return { getName, getSymbol };
+    const setName = (newName) => {
+        name = newName;
+    }
+    return { getName, setName, getSymbol };
 }
 
 const game = (function() {
