@@ -4,26 +4,50 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     height: 100vh;
+    gap: 5em;
+    padding: 5em;
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#restart-button {
+    padding: 10px;
+    border: none;
+    background-color: blueviolet;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+
 }
 
 .game-grid {
     display: grid;
     grid-template-columns: 200px 200px 200px;
     grid-template-rows: 200px 200px 200px;
-    margin: auto;
     border-radius: 10px;
-    border: 1px solid black;
+    gap: 10px;
+    align-content: center;
+    justify-content: center;
 }
 
 .cell {
     outline: 1px solid black;
     border-radius: 10px;
-    font-size: 128px;
+    font-size: 8em;
     font-family: sans-serif;
     display: flex;
     align-items: center;
