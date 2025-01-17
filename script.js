@@ -2,6 +2,7 @@ const displayController = (function(){
     const gameGrid = document.querySelector(".game-grid");
     const gridCells = gameGrid.querySelectorAll(".cell");
     const gameStatus = document.querySelector(".game-status");
+    const restartButton = document.getElementById("restart-button");
 
     const player = (name, symbol) => {
         const getName = () => name;
@@ -51,7 +52,12 @@ const displayController = (function(){
     
             return "draw";
         }
-        return { board, setCell, getCell, checkWin };
+
+        const resetBoard = () => {
+            board = [[null, null, null], [null, null, null], [null, null, null]];
+        }
+
+        return { board, setCell, getCell, checkWin, resetBoard };
     })();
 
     const game = (function() {
@@ -105,8 +111,8 @@ const displayController = (function(){
     }
     const placeSymbol = (e) => {
         const cell = e.target;
-        const row = cell.dataset.row;
-        const col = cell.dataset.column;
+        const row = parseInt(cell.dataset.row);
+        const col = parseInt(cell.dataset.column);
 
         const result = game.play(row, col);
         render(result);
@@ -115,7 +121,7 @@ const displayController = (function(){
         gridCells.forEach((cell) => {
             const row = cell.dataset.row;
             const col = cell.dataset.column;
-            cell.textContent = gameBoard.board[row][col];
+            cell.textContent = gameBoard.getCell(row, col);
         });
         if (result.gameOver){
             pauseGame();
@@ -130,6 +136,12 @@ const displayController = (function(){
             gameStatus.textContent = `${game.getCurrentPlayer().getName()}'s turn`;
         }
     }
+    const restartGame = () => {
+        gameBoard.resetBoard();
+        render({gameOver: false})
+        startGame();
+    }
+    restartButton.addEventListener("click", restartGame);
 
     startGame();
     return {gameBoard,game}
